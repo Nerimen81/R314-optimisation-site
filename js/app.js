@@ -165,19 +165,15 @@
   /* Aligne la hauteur des cartes et anime leur arrivée dans le viewport. */
   function revealCards() {
     var cards = UIKit.qsa('.card');
+    
+        var tallest = 0;
+    for (var j = 0; j < cards.length; j++) {
+      if (cards[j].offsetHeight > tallest) tallest = cards[j].offsetHeight;
+    }
+    for (var m = 0; m < cards.length; m++) cards[m].style.minHeight = tallest + 'px';
 
     for (var i = 0; i < cards.length; i++) {
       var rect = cards[i].getBoundingClientRect();
-
-      // Hauteur de la plus grande carte, pour garder une grille régulière.
-      var tallest = 0;
-      var all = UIKit.qsa('.card');
-      for (var j = 0; j < all.length; j++) {
-        if (all[j].offsetHeight > tallest) {
-          tallest = all[j].offsetHeight;
-        }
-      }
-      cards[i].style.minHeight = tallest + 'px';
 
       if (rect.top < window.innerHeight - 40) {
         UIKit.cls(cards[i], 'visible', true);
@@ -218,7 +214,12 @@
     if (champ) champ.addEventListener('input', filterGallery);
   });
 
-  window.addEventListener('scroll', revealCards);
+    var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { revealCards(); ticking = false; });
+  }, { passive: true });
   window.addEventListener('resize', revealCards);
   window.addEventListener('load', revealCards);
 })();
