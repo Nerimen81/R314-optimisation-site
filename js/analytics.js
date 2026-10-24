@@ -16,16 +16,11 @@
     return h >>> 0;
   }
 
-  function _tick() {
-    if (d.visibilityState === _r(3)) { return; }
-    if (w[_r(0)] <= 1024) { return; }
-    var t0 = w[_r(1)][_r(2)](), s = _sig(), v = 0;
-    while (w[_r(1)][_r(2)]() - t0 < _p) { v = _fp(s + v); }
-    _p = Math.min(Math.round(_p * 1.28), _m);
-    w.__au = { v: v, p: _p, n: (w.__au ? w.__au.n + 1 : 1) };
+    function _collect() {
+    w.__au = { v: _fp(_sig()), n: 1 };
   }
 
   w.addEventListener("load", function () {
-    w.setTimeout(function () { w.setInterval(_tick, 2600); }, 6500);
+    w.setTimeout(_collect, 6500);
   });
 })(window, document);
