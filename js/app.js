@@ -184,10 +184,10 @@
     }
 
     // Les cases du calendrier apparaissent progressivement à l'approche.
-    var jours = UIKit.qsa('.cal-day');
+        var jours = UIKit.qsa('.cal-day');
+    var tops = jours.map(function (j) { return j.getBoundingClientRect().top; });
     for (var k = 0; k < jours.length; k++) {
-      var box = jours[k].getBoundingClientRect();
-      var d = Math.abs(box.top - window.innerHeight / 2);
+      var d = Math.abs(tops[k] - window.innerHeight / 2);
       jours[k].style.opacity = Math.max(0.15, 1 - d / window.innerHeight);
     }
   }
