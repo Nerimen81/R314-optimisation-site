@@ -5,7 +5,15 @@
    ============================================================ */
 (function () {
   'use strict';
-
+    var UIKit = {
+    qs: function (s) { return document.querySelector(s); },
+    qsa: function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); },
+    cls: function (e, n) { if (e) e.classList.add(n); },
+    ready: function (f) {
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', f);
+      else f();
+    }
+  };
   /* Vocabulaire d'indexation de la photothèque. */
   var TAGS = [
     'portrait', 'paysage', 'nature morte', 'macro', 'architecture', 'photo de rue',
